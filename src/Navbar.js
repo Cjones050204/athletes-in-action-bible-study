@@ -52,12 +52,12 @@ export default function Navbar() {
         <Link 
           to="/dashboard" 
           style={{
-            color: '#00205B', // Dark Blue for text
+            color: '#00205B', 
             textDecoration: 'none',
             padding: '10px 20px',
             margin: '0 10px',
             borderRadius: '8px',
-            backgroundColor: '#FFDC5E', // Yellow-Gold
+            backgroundColor: '#FFDC5E', 
             transition: 'all 0.3s ease',
           }}
           onMouseEnter={(e) => e.target.style.backgroundColor = '#e1b847'}
@@ -68,12 +68,12 @@ export default function Navbar() {
         <Link 
           to="/saints" 
           style={{
-            color: '#00205B', // Dark Blue for text
+            color: '#00205B', 
             textDecoration: 'none',
             padding: '10px 20px',
             margin: '0 10px',
             borderRadius: '8px',
-            backgroundColor: '#FFDC5E', // Yellow-Gold
+            backgroundColor: '#FFDC5E', 
             transition: 'all 0.3s ease',
           }}
           onMouseEnter={(e) => e.target.style.backgroundColor = '#e1b847'}
@@ -84,12 +84,12 @@ export default function Navbar() {
         <button 
           onClick={handleLogout}
           style={{
-            color: '#00205B', // Dark Blue for text
+            color: '#00205B', 
             textDecoration: 'none',
             padding: '10px 20px',
             margin: '0 10px',
             borderRadius: '8px',
-            backgroundColor: '#FFDC5E', // Yellow-Gold
+            backgroundColor: '#FFDC5E', 
             border: 'none',
             cursor: 'pointer',
             transition: 'all 0.3s ease',

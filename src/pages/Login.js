@@ -47,7 +47,7 @@ export default function Login() {
 
 const styles = {
   container: {
-    background: 'linear-gradient(135deg, #00509D, #74C0FC)', // lighter blue gradient
+    background: 'linear-gradient(135deg, #00509D, #74C0FC)', 
     color: '#fff',
     minHeight: '100vh',
     display: 'flex',
