@@ -161,8 +161,8 @@ export default function Dashboard() {
         )}
 
         <h1 style={{ color: '#8DC8E8', marginBottom: '10px' }}>Athletes in Action Bible Study</h1>
-        <p style={{ marginBottom: '10px' }}>Welcome to your 4-week reading plan.</p>
-        <p style={{ marginBottom: '20px' }}>📅 Progress: {completedDays} / {totalDays} days completed</p>
+        <h2 style={{ marginBottom: '10px' }}>Welcome to your 4-week reading plan.</h2>
+        <h3 style={{ marginBottom: '20px' }}>📅 Progress: {completedDays} / {totalDays} days completed</h3>
 
         {readingPlan.map((week, weekIndex) => (
           <div key={weekIndex} style={{ marginBottom: '30px' }}>

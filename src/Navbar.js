@@ -24,7 +24,7 @@ export default function Navbar() {
       justifyContent: 'space-between',
       alignItems: 'center',
       padding: '20px',
-      backgroundColor: '#00205B', // Villanova Blue
+      backgroundColor: 'steelblue', 
       color: 'white',
       boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
     }}>
@@ -57,11 +57,11 @@ export default function Navbar() {
             padding: '10px 20px',
             margin: '0 10px',
             borderRadius: '8px',
-            backgroundColor: '#74C0FC', // Light Blue
+            backgroundColor: '#FFDC5E', // Yellow-Gold
             transition: 'all 0.3s ease',
           }}
-          onMouseEnter={(e) => e.target.style.backgroundColor = '#5e92f3'}
-          onMouseLeave={(e) => e.target.style.backgroundColor = '#74C0FC'}
+          onMouseEnter={(e) => e.target.style.backgroundColor = '#e1b847'}
+          onMouseLeave={(e) => e.target.style.backgroundColor = '#FFDC5E'}
         >
           Dashboard
         </Link>
@@ -73,11 +73,11 @@ export default function Navbar() {
             padding: '10px 20px',
             margin: '0 10px',
             borderRadius: '8px',
-            backgroundColor: '#74C0FC', // Light Blue
+            backgroundColor: '#FFDC5E', // Yellow-Gold
             transition: 'all 0.3s ease',
           }}
-          onMouseEnter={(e) => e.target.style.backgroundColor = '#5e92f3'}
-          onMouseLeave={(e) => e.target.style.backgroundColor = '#74C0FC'}
+          onMouseEnter={(e) => e.target.style.backgroundColor = '#e1b847'}
+          onMouseLeave={(e) => e.target.style.backgroundColor = '#FFDC5E'}
         >
           Saints
         </Link>
@@ -89,7 +89,7 @@ export default function Navbar() {
             padding: '10px 20px',
             margin: '0 10px',
             borderRadius: '8px',
-            backgroundColor: '#FFDC5E', // Yellow-gold
+            backgroundColor: '#FFDC5E', // Yellow-Gold
             border: 'none',
             cursor: 'pointer',
             transition: 'all 0.3s ease',
