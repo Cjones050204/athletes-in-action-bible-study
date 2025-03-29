@@ -3,96 +3,90 @@ import { Link } from 'react-router-dom';  // Assuming you're using React Router 
 
 export default function Welcome() {
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',
-      background: 'linear-gradient(135deg, #00205B, #003B7A)', // Villanova Blue gradient
-      color: '#FFFFFF', // White text for contrast
-      fontFamily: 'Arial, sans-serif',
-      padding: '0 20px',
-    }}>
+    <div style={styles.container}>
       {/* Villanova Wildcats Logo */}
       <img
         src="https://content.sportslogos.net/logos/35/897/full/villanova_wildcats_logo_secondary_20022239.png"
         alt="Villanova Wildcats Logo"
-        style={{
-          width: '200px', // Adjust size of logo
-          marginBottom: '30px',
-          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)', // Adding shadow for depth
-        }} 
+        style={styles.logo}
       />
+
+      <h2 style={styles.title}>Welcome to Athletes in Action Bible Study</h2>
+
+      {/* Group Info Box */}
+      <div style={styles.infoBox}>
+        <p style={styles.description}>
+          Join us Thursday nights at 7:30pm in the Haverford Room as we grow closer to God through Scripture.
+        </p>
+      </div>
       
-      <h1 style={{
-        fontSize: '50px',
-        fontWeight: 'bold',
-        marginBottom: '20px',
-        textShadow: '3px 3px 5px rgba(0, 0, 0, 0.5)', // Adding some shadow for a more dynamic look
-        textAlign: 'center',
-      }}>
-        Welcome to the Athletes in Action Webpage
-      </h1>
-      <p style={{
-        fontSize: '22px',
-        marginBottom: '40px',
-        fontWeight: 'normal',
-        textAlign: 'center',
-        maxWidth: '600px',
-        lineHeight: '1.6', // Improved readability with more space between lines
-      }}>
-        Join us Thursday nights at 7:30pm in the Haverford Room in the Connelly Center as we grow closer to God through Scripture.
-      </p>
-
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '20px',
-        marginTop: '20px',
-      }}>
-        <Link to="/login">
-          <button style={{
-            padding: '15px 30px',
-            fontSize: '18px',
-            backgroundColor: '#003B7A', // Villanova Blue
-            color: '#FFFFFF',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            width: '220px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-            fontWeight: 'bold',
-            transition: 'all 0.3s ease',
-          }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = '#00205B'} // Darker blue on hover
-            onMouseLeave={(e) => e.target.style.backgroundColor = '#003B7A'} // Original blue on hover out
-          >
-            Login
-          </button>
+      <div style={styles.buttonContainer}>
+        <Link to="/login" style={{ textDecoration: 'none' }}>
+          <button style={styles.button}>Login</button>
         </Link>
-
-        <Link to="/register">
-          <button style={{
-            padding: '15px 30px',
-            fontSize: '18px',
-            backgroundColor: '#8DC8E8', // Light blue accent
-            color: '#00205B', // Dark blue text
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            width: '220px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-            fontWeight: 'bold',
-            transition: 'all 0.3s ease',
-          }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = '#74B8D9'} // Lighter blue on hover
-            onMouseLeave={(e) => e.target.style.backgroundColor = '#8DC8E8'} // Original blue on hover out
-          >
-            Register
-          </button>
+        <Link to="/register" style={{ textDecoration: 'none' }}>
+          <button style={styles.button}>Register</button>
         </Link>
       </div>
     </div>
   );
 }
+
+const styles = {
+  container: {
+    background: 'linear-gradient(135deg, #00509D, #74C0FC)', 
+    color: '#fff',
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '20px',
+  },
+  logo: {
+    width: '180px',
+    marginBottom: '20px',
+  },
+  title: {
+    marginBottom: '15px',
+    color: '#fff',
+    fontSize: '36px', // Larger title for better visibility
+    fontWeight: '600',
+  },
+  infoBox: {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Light box with slight transparency
+    padding: '20px',
+    borderRadius: '8px',
+    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    maxWidth: '600px',
+    marginBottom: '30px',
+  },
+  description: {
+    fontSize: '20px',
+    fontWeight: '400',
+    textAlign: 'center',
+    color: '#003B7A', // Villanova Dark Blue for text
+  },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '15px',
+  },
+  button: {
+    padding: '12px',
+    fontSize: '16px',
+    backgroundColor: '#00509D', // Villanova Blue
+    color: '#fff',
+    border: 'none',
+    borderRadius: '6px',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    width: '200px',
+    textAlign: 'center',
+    transition: 'background-color 0.3s ease',
+  },
+  buttonHover: {
+    backgroundColor: '#FFD700', // Gold/Yellow hover effect
+  },
+};
+
