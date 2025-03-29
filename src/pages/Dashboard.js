@@ -217,7 +217,8 @@ export default function Dashboard() {
                       border: '1px solid #ccc',
                       backgroundColor: '#fff',
                       color: '#000',
-                      resize: 'none'
+                      resize: 'none',
+                      paddingRight: '10px'
                     }}
                   />
                 </div>
