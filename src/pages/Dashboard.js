@@ -27,7 +27,7 @@ export default function Dashboard() {
       { day: "Day 4", reading: "Genesis 22", description: "Abraham & Isaac" },
       { day: "Day 5", reading: "Genesis 37, 39–45", description: "Joseph’s Story" },
       { day: "Day 6", reading: "Genesis 50", description: "Joseph’s Conclusion" },
-      { day: "Day 7", reading: "Reflection & Catch-Up" }
+      { day: "Day 7", reading: "Reflection & Catch-Up", description: "This Weeks's Thoughts" }
     ],
     // Week 2
     [
@@ -37,7 +37,7 @@ export default function Dashboard() {
       { day: "Day 11", reading: "Exodus 19–20", description: "The Ten Commandments" },
       { day: "Day 12", reading: "Exodus 32–34", description: "The Golden Calf" },
       { day: "Day 13", reading: "Exodus 40", description: "God's Presence" },
-      { day: "Day 14", reading: "Reflection & Catch-Up" }
+      { day: "Day 14", reading: "Reflection & Catch-Up", description: "This Weeks's Thoughts" }
     ],
     // Week 3
     [
@@ -47,7 +47,7 @@ export default function Dashboard() {
       { day: "Day 18", reading: "John 13–15", description: "The Last Supper" },
       { day: "Day 19", reading: "John 18–19", description: "Jesus' Crucifixion" },
       { day: "Day 20", reading: "John 20–21", description: "Resurrection & Final Words" },
-      { day: "Day 21", reading: "Reflection & Catch-Up" }
+      { day: "Day 21", reading: "Reflection & Catch-Up", description: "This Weeks's Thoughts" }
     ],
     // Week 4
     [
@@ -57,7 +57,7 @@ export default function Dashboard() {
       { day: "Day 25", reading: "Romans 12", description: "Living as a Christian" },
       { day: "Day 26", reading: "Revelation 1–3", description: "Messages to Churches" },
       { day: "Day 27", reading: "Revelation 19–22", description: "Jesus' Return & New Creation" },
-      { day: "Day 28", reading: "Reflection & Final Thoughts" }
+      { day: "Day 28", reading: "Reflection & Final Thoughts", description: "This Weeks's Thoughts" }
     ]
   ];
 
@@ -211,7 +211,7 @@ export default function Dashboard() {
                       marginTop: '10px',
                       width: '100%',
                       height: '70px',
-                      padding: '8px',
+                      padding: '2px',
                       fontSize: '14px',
                       borderRadius: '6px',
                       border: '1px solid #ccc',
