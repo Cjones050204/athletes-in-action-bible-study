@@ -211,13 +211,14 @@ export default function Dashboard() {
                       marginTop: '10px',
                       width: '100%',
                       height: '70px',
-                      padding: '10px',
+                      padding: '2px',
                       fontSize: '14px',
                       borderRadius: '6px',
                       border: '1px solid #ccc',
                       backgroundColor: '#fff',
                       color: '#000',
-                      resize: 'none'
+                      resize: 'none', 
+                      paddingRight: '10px'
                     }}
                   />
                 </div>
