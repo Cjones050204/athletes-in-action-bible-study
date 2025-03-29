@@ -11,7 +11,8 @@ export default function Welcome() {
       height: '100vh',
       background: 'linear-gradient(135deg, #00205B, #003B7A)', // Villanova Blue gradient
       color: '#FFFFFF', // White text for contrast
-      fontFamily: 'Arial, sans-serif'
+      fontFamily: 'Arial, sans-serif',
+      padding: '0 20px',
     }}>
       {/* Villanova Wildcats Logo */}
       <img
@@ -19,48 +20,54 @@ export default function Welcome() {
         alt="Villanova Wildcats Logo"
         style={{
           width: '200px', // Adjust size of logo
-          marginBottom: '20px',
+          marginBottom: '30px',
+          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)', // Adding shadow for depth
         }} 
       />
       
       <h1 style={{
-        fontSize: '48px',
+        fontSize: '50px',
         fontWeight: 'bold',
         marginBottom: '20px',
-        textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' // Adding some shadow for a more dynamic look
+        textShadow: '3px 3px 5px rgba(0, 0, 0, 0.5)', // Adding some shadow for a more dynamic look
+        textAlign: 'center',
       }}>
         Welcome to the Athletes in Action Webpage
       </h1>
       <p style={{
-        fontSize: '20px',
+        fontSize: '22px',
         marginBottom: '40px',
         fontWeight: 'normal',
         textAlign: 'center',
-        maxWidth: '600px'
+        maxWidth: '600px',
+        lineHeight: '1.6', // Improved readability with more space between lines
       }}>
-        Join us Thursday nights at 7:30pm in the Haverford Room in the Connelly Center as we grow closer to God through Scripture
+        Join us Thursday nights at 7:30pm in the Haverford Room in the Connelly Center as we grow closer to God through Scripture.
       </p>
 
       <div style={{
         display: 'flex',
         flexDirection: 'column',
         gap: '20px',
-        marginTop: '20px'
+        marginTop: '20px',
       }}>
         <Link to="/login">
           <button style={{
             padding: '15px 30px',
             fontSize: '18px',
-            backgroundColor: '#8DC8E8', // Light blue accent
-            color: '#00205B', // Dark blue text
+            backgroundColor: '#003B7A', // Villanova Blue
+            color: '#FFFFFF',
             border: 'none',
-            borderRadius: '5px',
+            borderRadius: '8px',
             cursor: 'pointer',
-            width: '200px',
+            width: '220px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
             fontWeight: 'bold',
-            transition: 'background-color 0.3s'
-          }}>
+            transition: 'all 0.3s ease',
+          }}
+            onMouseEnter={(e) => e.target.style.backgroundColor = '#00205B'} // Darker blue on hover
+            onMouseLeave={(e) => e.target.style.backgroundColor = '#003B7A'} // Original blue on hover out
+          >
             Login
           </button>
         </Link>
@@ -72,13 +79,16 @@ export default function Welcome() {
             backgroundColor: '#8DC8E8', // Light blue accent
             color: '#00205B', // Dark blue text
             border: 'none',
-            borderRadius: '5px',
+            borderRadius: '8px',
             cursor: 'pointer',
-            width: '200px',
+            width: '220px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
             fontWeight: 'bold',
-            transition: 'background-color 0.3s'
-          }}>
+            transition: 'all 0.3s ease',
+          }}
+            onMouseEnter={(e) => e.target.style.backgroundColor = '#74B8D9'} // Lighter blue on hover
+            onMouseLeave={(e) => e.target.style.backgroundColor = '#8DC8E8'} // Original blue on hover out
+          >
             Register
           </button>
         </Link>
