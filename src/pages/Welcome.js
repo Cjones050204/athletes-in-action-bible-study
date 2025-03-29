@@ -38,7 +38,7 @@ export default function Welcome() {
         textAlign: 'center',
         maxWidth: '600px'
       }}>
-        Join us as we dive into the Word together and grow in our faith. Whether you're here to log in or register, we are excited to have you with us!
+        Join us Thursday nights at 7:30pm in the Haverford Room in the Connelly Center as we grow closer to God through Scripture
       </p>
 
       <div style={{
@@ -51,8 +51,8 @@ export default function Welcome() {
           <button style={{
             padding: '15px 30px',
             fontSize: '18px',
-            backgroundColor: '#003B7A', // Villanova Blue
-            color: '#FFFFFF',
+            backgroundColor: '#8DC8E8', // Light blue accent
+            color: '#00205B', // Dark blue text
             border: 'none',
             borderRadius: '5px',
             cursor: 'pointer',
