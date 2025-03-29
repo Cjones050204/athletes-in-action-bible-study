@@ -29,7 +29,7 @@ export default function Welcome() {
         marginBottom: '20px',
         textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' // Adding some shadow for a more dynamic look
       }}>
-        Welcome to the Athletes in Action Bible Study Webpage
+        Welcome to the Athletes in Action Webpage
       </h1>
       <p style={{
         fontSize: '20px',
