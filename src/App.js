@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import Welcome from './pages/Welcome';  // Import the new Welcome component
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -34,7 +35,8 @@ function AppWithNavbar({ user }) {
       {user && location.pathname !== '/login' && location.pathname !== '/register' && <Navbar />}
 
       <Routes>
-        <Route path="/" element={user ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
+        {/* Route for the Welcome page */}
+        <Route path="/" element={user ? <Navigate to="/dashboard" /> : <Welcome />} />  
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login" />} />
