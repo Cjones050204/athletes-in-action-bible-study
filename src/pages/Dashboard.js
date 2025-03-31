@@ -175,7 +175,7 @@ export default function Dashboard() {
               return (
                 <div key={key} style={{
                   background: '#235789',
-                  padding: '15px',
+                  padding: '20px 15px',
                   borderRadius: '8px',
                   marginBottom: '15px',
                   borderLeft: isChecked ? '6px solid #8DC8E8' : '6px solid transparent'
@@ -211,14 +211,14 @@ export default function Dashboard() {
                       marginTop: '10px',
                       width: '100%',
                       height: '70px',
-                      padding: '2px',
+                      padding: '10px',
                       fontSize: '14px',
                       borderRadius: '6px',
                       border: '1px solid #ccc',
                       backgroundColor: '#fff',
                       color: '#000',
-                      resize: 'none', 
-                      paddingRight: '10px'
+                      resize: 'none',
+                      boxSizing: 'border-box' 
                     }}
                   />
                 </div>
