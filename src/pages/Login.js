@@ -2,7 +2,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  signInWithEmailAndPassword,
+  setPersistence,
+  browserSessionPersistence 
+} from 'firebase/auth';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -13,9 +17,11 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      await setPersistence(auth, browserSessionPersistence); 
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/dashboard');
     } catch (err) {
+      console.error("Login error:", err);
       setError('Failed to log in. Please check your credentials.');
     }
   };
