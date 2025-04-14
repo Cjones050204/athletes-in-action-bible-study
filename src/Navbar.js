@@ -12,7 +12,7 @@ export default function Navbar() {
     try {
       await signOut(auth);
       // Redirect to welcome page
-      navigate('/welcome');
+      navigate('/');
     } catch (error) {
       console.error("Error logging out: ", error);
     }
