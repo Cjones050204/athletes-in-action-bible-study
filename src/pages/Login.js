@@ -1,12 +1,13 @@
 // src/pages/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 import {
   signInWithEmailAndPassword,
   setPersistence,
   browserSessionPersistence 
 } from 'firebase/auth';
+import { setDoc, doc } from 'firebase/firestore';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -19,6 +20,11 @@ export default function Login() {
     try {
       await setPersistence(auth, browserSessionPersistence); 
       await signInWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, 'users', auth.currentUser.uid), {
+        username: auth.currentUser.email.split('@')[0],
+        progress: {},
+        reflections: {}
+      }, { merge: true });
       navigate('/dashboard');
     } catch (err) {
       console.error("Login error:", err);
