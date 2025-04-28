@@ -18,6 +18,7 @@ export default function Dashboard() {
   const [username, setUsername] = useState('');
   const [editing, setEditing] = useState(false);
   const [inputUsername, setInputUsername] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
 
   const readingPlan = [
     // Week 1
@@ -65,6 +66,8 @@ export default function Dashboard() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        setCurrentUser(user);
+
         const docRef = doc(db, 'users', user.uid);
         const docSnap = await getDoc(docRef);
   
@@ -85,10 +88,9 @@ export default function Dashboard() {
   }, []);
 
   const saveData = async (newProgress, newReflections, newUsername = username) => {
-    const user = auth.currentUser;
-    if (!user) return;
+    if (!currentUser) return;
 
-    await setDoc(doc(db, 'users', user.uid), {
+    await setDoc(doc(db, 'users', currentUser.uid), {
       username: newUsername,
       progress: newProgress,
       reflections: newReflections
