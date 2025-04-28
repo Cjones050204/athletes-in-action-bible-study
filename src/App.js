@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import Welcome from './pages/Welcome';  // Import the new Welcome component
+import Welcome from './pages/Welcome';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Saints from './pages/Saints';
 import Navbar from './Navbar';
 import { auth } from './firebase';
+import { setPersistence, browserSessionPersistence } from 'firebase/auth'; // ✨ Added this
 
 function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
-      setUser(firebaseUser); // Set user state based on firebase authentication state
-    });
-
-    return () => unsubscribe();
+    // Set session persistence once when app loads
+    setPersistence(auth, browserSessionPersistence)
+      .then(() => {
+        const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+          setUser(firebaseUser); // Update user state when auth state changes
+        });
+        return unsubscribe;
+      })
+      .catch((error) => {
+        console.error("Failed to set persistence:", error);
+      });
   }, []);
 
   return (
@@ -27,16 +34,15 @@ function App() {
 }
 
 function AppWithNavbar({ user }) {
-  const location = useLocation(); // useLocation hook inside Router
+  const location = useLocation(); // Hook must be inside Router
 
   return (
     <>
-      {/* Conditionally render Navbar based on the route */}
+      {/* Conditionally show Navbar only if logged in and not on Login/Register pages */}
       {user && location.pathname !== '/login' && location.pathname !== '/register' && <Navbar />}
 
       <Routes>
-        {/* Route for the Welcome page */}
-        <Route path="/" element={user ? <Navigate to="/dashboard" /> : <Welcome />} />  
+        <Route path="/" element={user ? <Navigate to="/dashboard" /> : <Welcome />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login" />} />

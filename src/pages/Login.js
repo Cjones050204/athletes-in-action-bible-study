@@ -18,7 +18,7 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await setPersistence(auth, browserSessionPersistence); 
+       
       await signInWithEmailAndPassword(auth, email, password);
       await setDoc(doc(db, 'users', auth.currentUser.uid), {
         username: auth.currentUser.email.split('@')[0],
