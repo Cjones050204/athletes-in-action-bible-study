@@ -113,25 +113,26 @@ export default function Dashboard() {
   }, []);
 
   const saveData = async (newProgress, newReflections, newUsername = username) => {
-    if (!currentUser) return;
+    const user = auth.currentUser;
+    if (!user) return;
   
-    await setDoc(doc(db, 'users', currentUser.uid), {
+    await setDoc(doc(db, 'users', user.uid), {
       username: newUsername,
       progress: newProgress,
       reflections: newReflections
-    }, { merge: true }); 
+    }, { merge: true });
   };
 
   const toggleCheckbox = (key) => {
     const updatedProgress = { ...progress, [key]: !progress[key] };
     setProgress(updatedProgress);
-    saveData(updatedProgress, reflections);
+    
   };
   
   const updateReflection = (key, value) => {
     const updatedReflections = { ...reflections, [key]: value };
     setReflections(updatedReflections);
-    saveData(progress, updatedReflections);
+    
   };
 
   const handleUsernameSave = async () => {
@@ -142,6 +143,12 @@ export default function Dashboard() {
 
   const completedDays = Object.values(progress).filter(Boolean).length;
   const totalDays = 28;
+
+  useEffect(() => {
+    if (currentUser) {
+      saveData(progress, reflections, username);
+    }
+  }, [progress, reflections, username, currentUser]);
 
   return (
     <div style={{
