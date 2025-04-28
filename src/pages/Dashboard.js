@@ -114,24 +114,24 @@ export default function Dashboard() {
 
   const saveData = async (newProgress, newReflections, newUsername = username) => {
     if (!currentUser) return;
-
+  
     await setDoc(doc(db, 'users', currentUser.uid), {
       username: newUsername,
       progress: newProgress,
       reflections: newReflections
-    });
+    }, { merge: true }); 
   };
 
   const toggleCheckbox = (key) => {
-    const updated = { ...progress, [key]: !progress[key] };
-    setProgress(updated);
-    saveData(updated, reflections);
+    const updatedProgress = { ...progress, [key]: !progress[key] };
+    setProgress(updatedProgress);
+    saveData(updatedProgress, reflections);
   };
-
+  
   const updateReflection = (key, value) => {
-    const updated = { ...reflections, [key]: value };
-    setReflections(updated);
-    saveData(progress, updated);
+    const updatedReflections = { ...reflections, [key]: value };
+    setReflections(updatedReflections);
+    saveData(progress, updatedReflections);
   };
 
   const handleUsernameSave = async () => {
