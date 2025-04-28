@@ -13,17 +13,21 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Set session persistence once when app loads
+    let unsubscribe; // <- Define it outside first
+  
     setPersistence(auth, browserSessionPersistence)
       .then(() => {
-        const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
-          setUser(firebaseUser); // Update user state when auth state changes
+        unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+          setUser(firebaseUser);
         });
-        return unsubscribe;
       })
       .catch((error) => {
         console.error("Failed to set persistence:", error);
       });
+  
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
   }, []);
 
   return (
