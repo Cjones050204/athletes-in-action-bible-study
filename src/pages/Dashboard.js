@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { onAuthStateChanged } from "firebase/auth";
 
 const verses = [
   { text: "And we know that in all things God works for the good of those who love him...", ref: "Romans 8:28" },
@@ -62,26 +63,25 @@ export default function Dashboard() {
   ];
 
   useEffect(() => {
-    const loadUserData = async () => {
-      const user = auth.currentUser;
-      if (!user) return;
-
-      const docRef = doc(db, 'users', user.uid);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        setProgress(data.progress || {});
-        setReflections(data.reflections || {});
-        setUsername(data.username || user.email.split('@')[0]);
-        setInputUsername(data.username || user.email.split('@')[0]);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const docRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(docRef);
+  
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setProgress(data.progress || {});
+          setReflections(data.reflections || {});
+          setUsername(data.username || user.email.split('@')[0]);
+          setInputUsername(data.username || user.email.split('@')[0]);
+        }
       }
-    };
-
+    });
+  
     const todayIndex = new Date().getDate() % verses.length;
     setDailyVerse(verses[todayIndex]);
-
-    loadUserData();
+  
+    return () => unsubscribe(); // clean up when page changes
   }, []);
 
   const saveData = async (newProgress, newReflections, newUsername = username) => {
