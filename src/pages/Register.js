@@ -20,7 +20,7 @@ export default function Register() {
         reflections: {},
         username: ''
       });
-      navigate('/dashboard');
+      
     } catch (err) {
       setError('Failed to register. Email may already be in use.');
     }
