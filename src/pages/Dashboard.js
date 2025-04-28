@@ -107,10 +107,10 @@ export default function Dashboard() {
     saveData(progress, updated);
   };
 
-  const handleUsernameSave = () => {
-    setUsername(inputUsername);
+  const handleUsernameSave = async () => {
+    await saveData(progress, reflections, inputUsername);
+    setUsername(inputUsername); 
     setEditing(false);
-    saveData(progress, reflections, inputUsername);
   };
 
   const completedDays = Object.values(progress).filter(Boolean).length;
