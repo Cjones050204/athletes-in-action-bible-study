@@ -21,7 +21,7 @@ export default function Login() {
         progress: {},
         reflections: {}
       }, { merge: true });
-      navigate('/dashboard');
+      
     } catch (err) {
       console.error("Login error:", err);
       setError('Failed to log in. Please check your credentials.');
