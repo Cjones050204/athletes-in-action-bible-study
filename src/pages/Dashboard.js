@@ -146,7 +146,11 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (currentUser) {
-      saveData(progress, reflections, username);
+      const timeoutId = setTimeout(() => {
+        saveData(progress, reflections, username);
+      }, 1000); // 1 second delay
+  
+      return () => clearTimeout(timeoutId); // cancel previous timer if typing/checking continues
     }
   }, [progress, reflections, username, currentUser]);
 
