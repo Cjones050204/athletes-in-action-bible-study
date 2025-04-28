@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { auth, db } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { onAuthStateChanged } from "firebase/auth";
+import { useCallback } from 'react';
 
 const verses = [
   { text: "And we know that in all things God works for the good of those who love him...", ref: "Romans 8:28" },
@@ -112,7 +113,7 @@ export default function Dashboard() {
     return () => unsubscribe();
   }, []);
 
-  const saveData = async (newProgress, newReflections, newUsername = username) => {
+  const saveData = useCallback(async (newProgress, newReflections, newUsername = username) => {
     const user = auth.currentUser;
     if (!user) return;
   
@@ -121,7 +122,7 @@ export default function Dashboard() {
       progress: newProgress,
       reflections: newReflections
     }, { merge: true });
-  };
+  }, [username]);
 
   const toggleCheckbox = (key) => {
     const updatedProgress = { ...progress, [key]: !progress[key] };
