@@ -1,5 +1,6 @@
 // src/pages/Register.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
@@ -8,22 +9,34 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  
+  const navigate = useNavigate(); 
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(db, 'users', userCredential.user.uid), {
-        progress: {},
-        reflections: {},
-        username: ''
-      });
+      await createUserWithEmailAndPassword(auth, email, password);
       
     } catch (err) {
+      console.error("Register error:", err);
       setError('Failed to register. Email may already be in use.');
     }
   };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        await setDoc(doc(db, 'users', user.uid), {
+          username: user.email.split('@')[0],
+          progress: {},
+          reflections: {}
+        }, { merge: true });
+
+        navigate('/dashboard'); 
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
 
   return (
     <div style={styles.container}>
@@ -35,6 +48,7 @@ export default function Register() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <label style={styles.label}>Password</label>
         <input
@@ -42,6 +56,7 @@ export default function Register() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
         <button style={styles.button} type="submit">Register</button>
         {error && <p style={styles.error}>{error}</p>}
@@ -63,7 +78,6 @@ const styles = {
   },
   title: {
     marginBottom: '25px',
-    color: '#fff',
     fontSize: '28px',
     fontWeight: '600'
   },
@@ -75,12 +89,12 @@ const styles = {
     padding: '40px',
     borderRadius: '12px',
     boxShadow: '0 6px 15px rgba(0,0,0,0.25)',
-    width: '300px'
+    width: '300px',
+    color: '#003B7A'
   },
   label: {
     fontSize: '14px',
-    fontWeight: '500',
-    color: '#003B7A'
+    fontWeight: '500'
   },
   input: {
     padding: '10px',

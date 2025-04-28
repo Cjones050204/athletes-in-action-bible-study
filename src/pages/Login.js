@@ -1,33 +1,42 @@
 // src/pages/Login.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { setDoc, doc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  
+  const navigate = useNavigate(); 
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-  
-      await setDoc(doc(db, 'users', user.uid), {
-        username: user.email.split('@')[0],
-        progress: {},
-        reflections: {}
-      }, { merge: true });
-  
+      await signInWithEmailAndPassword(auth, email, password);
       
     } catch (err) {
       console.error("Login error:", err);
       setError('Failed to log in. Please check your credentials.');
     }
   };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        await setDoc(doc(db, 'users', user.uid), {
+          username: user.email.split('@')[0],
+          progress: {},
+          reflections: {}
+        }, { merge: true });
+
+        navigate('/dashboard'); 
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
 
   return (
     <div style={styles.container}>
@@ -39,6 +48,7 @@ export default function Login() {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <label style={styles.label}>Password</label>
         <input
@@ -46,6 +56,7 @@ export default function Login() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
         <button style={styles.button} type="submit">Login</button>
         {error && <p style={styles.error}>{error}</p>}
@@ -67,7 +78,6 @@ const styles = {
   },
   title: {
     marginBottom: '25px',
-    color: '#fff',
     fontSize: '28px',
     fontWeight: '600'
   },
@@ -79,12 +89,12 @@ const styles = {
     padding: '40px',
     borderRadius: '12px',
     boxShadow: '0 6px 15px rgba(0,0,0,0.25)',
-    width: '300px'
+    width: '300px',
+    color: '#003B7A'
   },
   label: {
     fontSize: '14px',
-    fontWeight: '500',
-    color: '#003B7A'
+    fontWeight: '500'
   },
   input: {
     padding: '10px',

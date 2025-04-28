@@ -1,3 +1,4 @@
+// src/App.js
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Welcome from './pages/Welcome';
@@ -7,27 +8,22 @@ import Dashboard from './pages/Dashboard';
 import Saints from './pages/Saints';
 import Navbar from './Navbar';
 import { auth } from './firebase';
-import { setPersistence, browserSessionPersistence } from 'firebase/auth'; // ✨ Added this
+import { setPersistence, browserSessionPersistence } from 'firebase/auth';
 
 function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    let unsubscribe; // <- Define it outside first
-  
     setPersistence(auth, browserSessionPersistence)
       .then(() => {
-        unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+        const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
           setUser(firebaseUser);
         });
+        return unsubscribe;
       })
       .catch((error) => {
         console.error("Failed to set persistence:", error);
       });
-  
-    return () => {
-      if (unsubscribe) unsubscribe();
-    };
   }, []);
 
   return (
@@ -38,17 +34,17 @@ function App() {
 }
 
 function AppWithNavbar({ user }) {
-  const location = useLocation(); // Hook must be inside Router
+  const location = useLocation();
 
   return (
     <>
-      {/* Conditionally show Navbar only if logged in and not on Login/Register pages */}
+      {/* Only show Navbar if logged in and not on Login/Register */}
       {user && location.pathname !== '/login' && location.pathname !== '/register' && <Navbar />}
 
       <Routes>
         <Route path="/" element={user ? <Navigate to="/dashboard" /> : <Welcome />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
+        <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login" />} />
         <Route path="/saints" element={user ? <Saints /> : <Navigate to="/login" />} />
       </Routes>
