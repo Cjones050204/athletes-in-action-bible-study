@@ -14,13 +14,15 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-       
-      await signInWithEmailAndPassword(auth, email, password);
-      await setDoc(doc(db, 'users', auth.currentUser.uid), {
-        username: auth.currentUser.email.split('@')[0],
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+  
+      await setDoc(doc(db, 'users', user.uid), {
+        username: user.email.split('@')[0],
         progress: {},
         reflections: {}
       }, { merge: true });
+  
       navigate('/dashboard');
     } catch (err) {
       console.error("Login error:", err);
