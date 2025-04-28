@@ -133,7 +133,7 @@ export default function Dashboard() {
   const updateReflection = (key, value) => {
     const updatedReflections = { ...reflections, [key]: value };
     setReflections(updatedReflections);
-    saveData(updatedProgress, reflections, username);
+    saveData(updatedReflections, reflections, username);
   };
 
   const handleUsernameSave = async () => {
