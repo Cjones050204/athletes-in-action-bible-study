@@ -75,16 +75,17 @@ export default function Dashboard() {
           const data = docSnap.data();
           const loadedUsername = data.username;
   
+          setProgress(data.progress || {});
+          setReflections(data.reflections || {});
+  
           if (loadedUsername) {
             setUsername(loadedUsername);
             setInputUsername(loadedUsername);
           } else {
-            
             const defaultUsername = user.email ? user.email.split('@')[0] : "User";
             setUsername(defaultUsername);
             setInputUsername(defaultUsername);
   
-            
             await setDoc(docRef, {
               username: defaultUsername,
               progress: {},
@@ -92,7 +93,7 @@ export default function Dashboard() {
             }, { merge: true });
           }
         } else {
-          
+          // if document doesn't exist
           const defaultUsername = user.email ? user.email.split('@')[0] : "User";
           await setDoc(docRef, {
             username: defaultUsername,
@@ -105,7 +106,7 @@ export default function Dashboard() {
       }
     });
   
-    const todayIndex = new Date().getDate() % verses.length;
+    const todayIndex = new Date().getDay() % verses.length;
     setDailyVerse(verses[todayIndex]);
   
     return () => unsubscribe();
