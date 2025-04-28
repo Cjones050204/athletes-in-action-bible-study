@@ -67,16 +67,40 @@ export default function Dashboard() {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setCurrentUser(user);
-
+  
         const docRef = doc(db, 'users', user.uid);
         const docSnap = await getDoc(docRef);
   
         if (docSnap.exists()) {
           const data = docSnap.data();
-          setProgress(data.progress || {});
-          setReflections(data.reflections || {});
-          setUsername(data.username || user.email.split('@')[0]);
-          setInputUsername(data.username || user.email.split('@')[0]);
+          const loadedUsername = data.username;
+  
+          if (loadedUsername) {
+            setUsername(loadedUsername);
+            setInputUsername(loadedUsername);
+          } else {
+            
+            const defaultUsername = user.email ? user.email.split('@')[0] : "User";
+            setUsername(defaultUsername);
+            setInputUsername(defaultUsername);
+  
+            
+            await setDoc(docRef, {
+              username: defaultUsername,
+              progress: {},
+              reflections: {}
+            }, { merge: true });
+          }
+        } else {
+          
+          const defaultUsername = user.email ? user.email.split('@')[0] : "User";
+          await setDoc(docRef, {
+            username: defaultUsername,
+            progress: {},
+            reflections: {}
+          });
+          setUsername(defaultUsername);
+          setInputUsername(defaultUsername);
         }
       }
     });
@@ -84,7 +108,7 @@ export default function Dashboard() {
     const todayIndex = new Date().getDate() % verses.length;
     setDailyVerse(verses[todayIndex]);
   
-    return () => unsubscribe(); // clean up when page changes
+    return () => unsubscribe();
   }, []);
 
   const saveData = async (newProgress, newReflections, newUsername = username) => {
