@@ -127,13 +127,13 @@ export default function Dashboard() {
   const toggleCheckbox = (key) => {
     const updatedProgress = { ...progress, [key]: !progress[key] };
     setProgress(updatedProgress);
-    
+    saveData(updatedProgress, reflections, username);
   };
   
   const updateReflection = (key, value) => {
     const updatedReflections = { ...reflections, [key]: value };
     setReflections(updatedReflections);
-    
+    saveData(updatedProgress, reflections, username);
   };
 
   const handleUsernameSave = async () => {
