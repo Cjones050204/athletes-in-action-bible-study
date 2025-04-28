@@ -152,7 +152,7 @@ export default function Dashboard() {
   
       return () => clearTimeout(timeoutId); // cancel previous timer if typing/checking continues
     }
-  }, [progress, reflections, username, currentUser]);
+  }, [progress, reflections, username, currentUser, saveData]);
 
   return (
     <div style={{
