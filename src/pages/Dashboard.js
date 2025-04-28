@@ -65,52 +65,20 @@ export default function Dashboard() {
   ];
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setCurrentUser(user);
-  
-        const docRef = doc(db, 'users', user.uid);
-        const docSnap = await getDoc(docRef);
-  
-        if (docSnap.exists()) {
-          const data = docSnap.data();
-          const loadedUsername = data.username;
-  
-          setProgress(data.progress || {});
-          setReflections(data.reflections || {});
-  
-          if (loadedUsername) {
-            setUsername(loadedUsername);
-            setInputUsername(loadedUsername);
-          } else {
-            const defaultUsername = user.email ? user.email.split('@')[0] : "User";
-            setUsername(defaultUsername);
-            setInputUsername(defaultUsername);
-  
-            await setDoc(docRef, {
-              username: defaultUsername,
-              progress: {},
-              reflections: {}
-            }, { merge: true });
-          }
-        } else {
-          // if document doesn't exist
-          const defaultUsername = user.email ? user.email.split('@')[0] : "User";
-          await setDoc(docRef, {
-            username: defaultUsername,
-            progress: {},
-            reflections: {}
-          });
-          setUsername(defaultUsername);
-          setInputUsername(defaultUsername);
-        }
+      } else {
+        setCurrentUser(null);
       }
     });
   
+    return () => unsubscribe();
+  }, []);
+  
+  useEffect(() => {
     const todayIndex = new Date().getDay() % verses.length;
     setDailyVerse(verses[todayIndex]);
-  
-    return () => unsubscribe();
   }, []);
 
   const saveData = useCallback(async (newProgress, newReflections, newUsername = username) => {
@@ -141,6 +109,46 @@ export default function Dashboard() {
     setUsername(inputUsername); 
     setEditing(false);
   };
+
+  const loadUserData = useCallback(async () => {
+    const user = auth.currentUser;
+    if (user) {
+      const docRef = doc(db, 'users', user.uid);
+      const docSnap = await getDoc(docRef);
+  
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setProgress(data.progress || {});
+        setReflections(data.reflections || {});
+        if (data.username) {
+          setUsername(data.username);
+          setInputUsername(data.username);
+        } else {
+          // 👇 If username missing, set a default one
+          const defaultUsername = user.email ? user.email.split('@')[0] : "User";
+          await setDoc(docRef, { username: defaultUsername }, { merge: true });
+          setUsername(defaultUsername);
+          setInputUsername(defaultUsername);
+        }
+      } else {
+        // 👇 If doc does not exist, create a new one
+        const defaultUsername = user.email ? user.email.split('@')[0] : "User";
+        await setDoc(docRef, {
+          username: defaultUsername,
+          progress: {},
+          reflections: {}
+        });
+        setUsername(defaultUsername);
+        setInputUsername(defaultUsername);
+        setProgress({});
+        setReflections({});
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    loadUserData();
+  }, [loadUserData]);
 
   const completedDays = Object.values(progress).filter(Boolean).length;
   const totalDays = 28;
